@@ -1,7 +1,7 @@
 package functional_go
 
-func Map[T any](items []T, function func(item T) T) []T {
-	mapped := []T{}
+func Map[T any, K any](items []T, function func(item T) K) []K {
+	mapped := []K{}
 
 	for _, item := range items {
 		mapped = append(mapped, function(item))

@@ -1,6 +1,9 @@
 package functional_go
 
-import "testing"
+import (
+	"strconv"
+	"testing"
+)
 
 func TestMapDoublingIntegers(t *testing.T) {
 	function_which_doubles_an_integer := func(number int) int {
@@ -39,6 +42,21 @@ func TestMapConcatenatingStrings(t *testing.T) {
 	if world_greetings[0] != "hello world" ||
 		world_greetings[1] != "goodbye world" {
 		t.Fatalf(`%q != []string{'hello world', 'goodbye world'}`, world_greetings)
+	}
+}
+
+func TestMapIntegersToStrings(t *testing.T) {
+	numbers := []int{1, 2}
+
+	strings := Map(
+		numbers,
+		func(number int) string {
+			return strconv.Itoa(number)
+		},
+	)
+
+	if strings[0] != "1" || strings[1] != "2" {
+		t.Fatalf(`%q != []string{"1", "2"}`, strings)
 	}
 }
 
