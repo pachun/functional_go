@@ -41,3 +41,33 @@ func TestMapConcatenatingStrings(t *testing.T) {
 		t.Fatalf(`%q != []string{'hello world', 'goodbye world'}`, world_greetings)
 	}
 }
+
+func TestFilterRemovesEvenNumbers(t *testing.T) {
+	numbers := []int{1, 2, 3, 4}
+
+	even_numbers := Filter(
+		numbers,
+		func(number int) bool { return number%2 == 0 },
+	)
+
+	if len(even_numbers) != 2 ||
+		even_numbers[0] != 2 ||
+		even_numbers[1] != 4 {
+		t.Fatalf(`%q != []int{2, 4}`, even_numbers)
+	}
+}
+
+func TestFilterRemovesEmptyStrings(t *testing.T) {
+	strings := []string{"hello", "", "world"}
+
+	words := Filter(
+		strings,
+		func(word string) bool { return len(word) > 0 },
+	)
+
+	if len(words) != 2 ||
+		words[0] != "hello" ||
+		words[1] != "world" {
+		t.Fatalf(`%q != []string{"hello", "world"}`, words)
+	}
+}
