@@ -71,3 +71,45 @@ func TestFilterRemovesEmptyStrings(t *testing.T) {
 		t.Fatalf(`%q != []string{"hello", "world"}`, words)
 	}
 }
+
+func TestReduceSumsIntegers(t *testing.T) {
+	numbers := []int{1, 2, 3}
+
+	sum := Reduce(numbers, 0, func(accumulator int, nextNumber int) int { return accumulator + nextNumber })
+
+	if sum != 6 {
+		t.Fatalf(`%q != 6`, sum)
+	}
+}
+
+func TestReduceOnlyKeepsEvenNumbers(t *testing.T) {
+	numbers := []int{1, 2, 3}
+
+	even_numbers := Reduce(numbers, []int{}, func(accumulator []int, nextNumber int) []int {
+		if nextNumber%2 == 0 {
+			return append(accumulator, nextNumber)
+		} else {
+			return accumulator
+		}
+	})
+
+	if len(even_numbers) != 1 || even_numbers[0] != 2 {
+		t.Fatalf(`%q != []int{2}`, even_numbers)
+	}
+}
+
+func TestReduceRemovesEmptyStrings(t *testing.T) {
+	strings := []string{"hello", "", "world"}
+
+	words := Reduce(strings, []string{}, func(accumulator []string, nextString string) []string {
+		if len(nextString) > 0 {
+			return append(accumulator, nextString)
+		} else {
+			return accumulator
+		}
+	})
+
+	if len(words) != 2 || words[0] != "hello" || words[1] != "world" {
+		t.Fatalf(`%q != []string{"hello", "world"}`, words)
+	}
+}

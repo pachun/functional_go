@@ -21,3 +21,13 @@ func Filter[T any](items []T, function func(item T) bool) []T {
 
 	return filtered
 }
+
+func Reduce[T any, V any](items []V, initial T, function func(accumulator T, nextNumber V) T) T {
+	reduced := initial
+
+	for _, item := range items {
+		reduced = function(reduced, item)
+	}
+
+	return reduced
+}
